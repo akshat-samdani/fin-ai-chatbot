@@ -13,12 +13,14 @@ export interface FinancialRecommendation {
   actionItems: string[];
 }
 
+import { env } from '../config/env';
+
 class AIService {
   private apiKey: string | null = null;
 
   constructor() {
-    // In production, set your OpenAI API key here
-    // this.apiKey = process.env.OPENAI_API_KEY;
+    // Get API key from environment variables via expo-constants
+    this.apiKey = env.openaiApiKey || null;
   }
 
   async analyzeUserProfile(userProfile: any): Promise<PersonaAnalysis> {

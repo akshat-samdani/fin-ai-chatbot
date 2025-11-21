@@ -7,9 +7,11 @@ type Props = {
   selectedLang: 'english' | 'hindi';
 };
 
-const AZURE_TRANSLATOR_KEY = '';
-const AZURE_TRANSLATOR_ENDPOINT = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
-const AZURE_REGION = 'norwayeast';
+import { env } from '../../config/env';
+
+const AZURE_TRANSLATOR_KEY = env.azureTranslatorKey || '';
+const AZURE_TRANSLATOR_ENDPOINT = env.azureTranslatorEndpoint;
+const AZURE_REGION = env.azureTranslatorRegion;
 
 const GoalSelection = ({ onNext, selectedLang }: Props) => {
   const defaultGoals = [

@@ -6,9 +6,11 @@ type Props = {
   onNext: (key: string, value: string) => void;
 };
 
-const AZURE_TRANSLATOR_KEY = '';
-const AZURE_TRANSLATOR_ENDPOINT = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
-const AZURE_REGION = 'norwayeast'; // e.g., 'eastus'
+import { env } from '../../config/env';
+
+const AZURE_TRANSLATOR_KEY = env.azureTranslatorKey || '';
+const AZURE_TRANSLATOR_ENDPOINT = env.azureTranslatorEndpoint;
+const AZURE_REGION = env.azureTranslatorRegion;
 
 const LanguageSelection = ({ onNext }: Props) => {
   const [selectedLang, setSelectedLang] = useState<'english' | 'hindi'>('english');

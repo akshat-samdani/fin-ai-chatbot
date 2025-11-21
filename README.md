@@ -163,15 +163,62 @@ Each persona receives recommendations across multiple categories:
 
 ### Environment Variables
 
-To integrate with OpenAI API (for enhanced AI capabilities), add your API key:
+**⚠️ IMPORTANT: Before deploying to production, you MUST set up environment variables for API keys.**
 
-1. Create a `.env` file in the `fincue` directory
-2. Add your OpenAI API key:
-```
-OPENAI_API_KEY=your_api_key_here
-```
+The app uses the following environment variables:
 
-Note: Currently, the app uses rule-based persona detection. To enable OpenAI integration, uncomment the relevant code in `AIService.tsx`.
+#### Required for Production:
+
+1. **Azure Translator API** (required for Hindi language support):
+   - `AZURE_TRANSLATOR_KEY` - Your Azure Translator subscription key
+   - `AZURE_TRANSLATOR_ENDPOINT` - Azure Translator API endpoint (default provided)
+   - `AZURE_TRANSLATOR_REGION` - Azure region (default: `norwayeast`)
+
+#### Optional:
+
+2. **OpenAI API** (for enhanced AI capabilities):
+   - `OPENAI_API_KEY` - Your OpenAI API key (currently uses rule-based detection)
+
+### Setup Instructions
+
+1. **Create a `.env` file** in the `fincue` directory:
+   ```bash
+   cd fincue
+   touch .env
+   ```
+
+2. **Add your API keys** to the `.env` file:
+   ```env
+   # Azure Translator (Required for Hindi support)
+   AZURE_TRANSLATOR_KEY=your_azure_translator_key_here
+   AZURE_TRANSLATOR_ENDPOINT=https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+   AZURE_TRANSLATOR_REGION=norwayeast
+
+   # OpenAI (Optional - for enhanced AI)
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+3. **For Production Deployment:**
+
+   - **Expo/EAS Build**: Use EAS Secrets:
+     ```bash
+     eas secret:create --scope project --name AZURE_TRANSLATOR_KEY --value your_key
+     eas secret:create --scope project --name OPENAI_API_KEY --value your_key
+     ```
+
+   - **Standalone Builds**: Environment variables are automatically read from `.env` during build via `app.config.js`
+
+4. **Verify the `.env` file is in `.gitignore`** (it should already be configured)
+
+### Security Notes
+
+- ✅ Never commit `.env` files to version control
+- ✅ Use different API keys for development and production
+- ✅ Rotate API keys regularly
+- ✅ Use environment variable injection in CI/CD pipelines
+- ✅ For Expo: Use EAS Secrets for production builds
+
+The app configuration reads these variables via `expo-constants` and makes them available throughout the app via `src/config/env.ts`.
 
 ## 📝 Usage
 
