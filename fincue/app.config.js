@@ -27,7 +27,8 @@ module.exports = {
       edgeToEdgeEnabled: true
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./assets/favicon.png",
+      bundler: "metro"
     },
     extra: {
       // Environment variables accessible via Constants.expoConfig.extra
